@@ -21,28 +21,37 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # PostgreSQL connection details
-DATABASE_URL = "postgresql://user:password@localhost:5432/feedback"
+DATABASE_URL = "postgresql://postgres:postgres@localhost/gamechanger"
 
 def get_db_connection():
     conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
     return conn
 
 class Feedback(BaseModel):
-    email: str
-    message: str
+    name: str
+    subject: str
+    feedback: str
+
 
 @app.post("/feedback")
 async def create_feedback(feedback: Feedback):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO feedback (email, message) VALUES (%s, %s)", 
-                   (feedback.email, feedback.message))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return {"message": "Feedback submitted successfully"}
+    print("Entered create_feedback")
+    try:
+        print("Entered create_feedback")
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO feedback (name, subject, feedback) VALUES (%s, %s, %s)", 
+                       (feedback.name, feedback.subject, feedback.feedback))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return {"message": "Feedback submitted successfully"}
+    except Exception as e:
+        print(f"Error creating feedback: {e}")
+        raise e
 
-@app.get("/feedback")
+
+@app.get("/feed")
 async def read_feedback():
     conn = get_db_connection()
     cursor = conn.cursor()

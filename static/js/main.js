@@ -112,6 +112,30 @@
         loop: true,
         items: 1
     });
+
+    document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const data = {
+            name: formData.get('feedbackName'),
+            email: formData.get('feedbackEmail'),
+            message: formData.get('feedbackMessage')
+        };
+        fetch('/feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (response.ok) {
+                event.target.reset(); // Reset the form
+            } else {
+                alert('Something went wrong. Please try again.');
+            }
+        });
+    });
+    
     
 })(jQuery);
 
