@@ -10,10 +10,12 @@ from typing import List
 
 app = FastAPI()
 
-# Allow CORS for local development
+# origins = ["*"]  # Update with specific origins if needed
+origins = ["https://www.gamechangerofficial.com"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
