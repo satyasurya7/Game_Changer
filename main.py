@@ -6,6 +6,7 @@ from pydantic import BaseModel
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from fastapi.exceptions import HTTPException
+from typing import List
 
 app = FastAPI()
 
@@ -50,7 +51,19 @@ async def create_feedback(feedback: Feedback):
         print(f"Error creating feedback: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
+@app.get("/feedback", response_model=List[Feedback])
+async def read_feedback():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT name, subject, feedback FROM feedback")
+        feedbacks = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return feedbacks
+    except Exception as e:
+        print(f"Error fetching feedback: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/", response_class=HTMLResponse)
 async def read_index():

@@ -139,5 +139,47 @@
             $('#responseMessage').text('An error occurred: ' + error.message);
         }
     });
+    // Fetch and display feedback
+    async function fetchFeedback() {
+        try {
+            const response = await fetch('http://127.0.0.1:8400/feedback');
+            const feedbackData = await response.json();
+            populateFeedback(feedbackData);
+        } catch (error) {
+            console.error('Error fetching feedback:', error);
+        }
+    }
+
+    function populateFeedback(feedbackData) {
+        const feedbackContainer = $('.owl-carousel.testimonial-carousel');
+        feedbackContainer.trigger('destroy.owl.carousel'); // Destroy the previous instance
+        feedbackContainer.empty(); // Clear existing items
+
+        feedbackData.forEach(feedback => {
+            const feedbackHTML = `
+                <div class="text-center">
+                    <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                    <h4 class="font-weight-light mb-4">${feedback.feedback}</h4>
+                    <h5 class="font-weight-bold m-0">${feedback.subject}</h5>
+                    <span>${feedback.name}</span>
+                </div>
+            `;
+            feedbackContainer.append(feedbackHTML);
+        });
+
+        // Reinitialize the carousel to apply changes
+        feedbackContainer.owlCarousel({
+            autoplay: true,
+            smartSpeed: 1500,
+            dots: true,
+            loop: true,
+            items: 1
+        });
+    }
+
+    // Call fetchFeedback when the document is ready
+    $(document).ready(function() {
+        fetchFeedback();
+    });
     
 })(jQuery);
