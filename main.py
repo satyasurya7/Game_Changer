@@ -10,8 +10,8 @@ from typing import List
 
 app = FastAPI()
 
-# origins = ["*"]  # Update with specific origins if needed
-origins = ["https://www.gamechangerofficial.com"]
+origins = ["*"]  # Update with specific origins if needed
+# origins = ["https://www.gamechangerofficial.com"]
 
 app.add_middleware(
     CORSMiddleware,
