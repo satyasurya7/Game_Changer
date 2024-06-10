@@ -11,7 +11,7 @@ from typing import List
 app = FastAPI()
 
 # origins = ["*"]  # Update with specific origins if needed
-origins = ["https://www.gamechangerofficial.com"]
+origins = ["https://www.gamechangerofficial.com", "app.gc.clever-flower-19874.pktriot.net"]
 
 app.add_middleware(
     CORSMiddleware,
