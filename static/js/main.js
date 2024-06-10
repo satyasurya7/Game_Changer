@@ -119,7 +119,7 @@
         console.log(data);  // Add this line to debug and see the data being sent
         
         try {
-            const response = await fetch('https://app.gc.clever-flower-19874.pktriot.net/feedback', {
+            const response = await fetch('https://www.gamechangerofficial.com/feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -142,7 +142,7 @@
     // Fetch and display feedback
     async function fetchFeedback() {
         try {
-            const response = await fetch('https://app.gc.clever-flower-19874.pktriot.net/feedback');
+            const response = await fetch('https://www.gamechangerofficial.com/feedback');
             const feedbackData = await response.json();
             populateFeedback(feedbackData);
         } catch (error) {
