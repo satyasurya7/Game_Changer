@@ -4,25 +4,25 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Example steps
-                echo 'Building...'
+                // Example: Install dependencies (if needed)
+                sh 'pip install -r requirements.txt'
+                // Additional build steps as necessary
             }
         }
 
         stage('Test') {
             steps {
-                // Example steps
-                echo 'Testing...'
+                // Example: Run tests (if needed)
+                sh 'pytest'
+                // Additional test steps as necessary
             }
         }
 
         stage('Deploy') {
             steps {
-                // Change directory to where your FastAPI application is located
-                dir('~/Game_Changer/') {
-                    // Run uvicorn to start FastAPI application
-                    sh 'uvicorn main:app --port 8400 &'
-                }
+                // Example deployment command
+                sh 'uvicorn main:app --port 8400 &'
+                // Replace with your actual deployment command or script
             }
         }
     }
@@ -30,9 +30,11 @@ pipeline {
     post {
         success {
             echo 'Pipeline succeeded!'
+            // Add post-success actions if needed
         }
         failure {
             echo 'Pipeline failed!'
+            // Add post-failure actions if needed
         }
     }
 }
