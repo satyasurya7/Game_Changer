@@ -4,25 +4,38 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Example: Install dependencies (if needed)
-                sh 'pip install -r requirements.txt'
-                // Additional build steps as necessary
+                // Create a virtual environment and activate it
+                script {
+                    sh '''
+                        python3 -m venv venv
+                        source venv/bin/activate
+                        pip install -r requirements.txt
+                    '''
+                }
             }
         }
 
         stage('Test') {
             steps {
-                // Example: Run tests (if needed)
-                sh 'pytest'
-                // Additional test steps as necessary
+                // Example: Run tests (adjust as per your testing framework)
+                script {
+                    sh '''
+                        source venv/bin/activate
+                        pytest
+                    '''
+                }
             }
         }
 
         stage('Deploy') {
             steps {
                 // Example deployment command
-                sh 'uvicorn main:app --port 8400 &'
-                // Replace with your actual deployment command or script
+                script {
+                    sh '''
+                        source venv/bin/activate
+                        uvicorn main:app --port 8400 &
+                    '''
+                }
             }
         }
     }
