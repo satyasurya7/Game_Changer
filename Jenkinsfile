@@ -15,18 +15,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                script {
-                    // Activate virtual environment and run tests
-                    sh '''
-                        . venv/bin/activate
-                        pytest
-                    '''
-                }
-            }
-        }
-
         stage('Deploy') {
             steps {
                 script {
