@@ -170,7 +170,7 @@
         // Reinitialize the carousel to apply changes
         feedbackContainer.owlCarousel({
             autoplay: true,
-            smartSpeed: 1500,
+            smartSpeed: 15000,
             dots: true,
             loop: true,
             items: 1
