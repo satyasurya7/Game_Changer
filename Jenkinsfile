@@ -4,11 +4,11 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Create a virtual environment and activate it
+                // Create and activate a virtual environment
                 script {
                     sh '''
                         python3 -m venv venv
-                        source venv/bin/activate
+                        . venv/bin/activate  # Use dot (.) instead of source
                         pip install -r requirements.txt
                     '''
                 }
@@ -17,10 +17,10 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Example: Run tests (adjust as per your testing framework)
                 script {
+                    // Activate virtual environment and run tests
                     sh '''
-                        source venv/bin/activate
+                        . venv/bin/activate
                         pytest
                     '''
                 }
@@ -29,10 +29,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Example deployment command
                 script {
+                    // Activate virtual environment and deploy
                     sh '''
-                        source venv/bin/activate
+                        . venv/bin/activate
                         uvicorn main:app --port 8400 &
                     '''
                 }
